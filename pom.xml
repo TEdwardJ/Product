@@ -52,6 +52,12 @@
         <artifactId>commons-codec</artifactId>
         <version>1.10</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.jolira/onejar-maven-plugin -->
+    <dependency>
+        <groupId>com.jolira</groupId>
+        <artifactId>onejar-maven-plugin</artifactId>
+        <version>1.4.4</version>
+    </dependency>
 
 </dependencies>
 
@@ -64,6 +70,18 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.jolira</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
