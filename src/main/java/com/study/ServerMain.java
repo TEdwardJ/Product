@@ -5,7 +5,6 @@ import com.study.dao.PostgresProductDAO;
 import com.study.dao.PostgresUserDAO;
 import com.study.security.AuthenticationService;
 import com.study.security.DBAuthenticationService;
-import com.study.security.entity.Session;
 import com.study.service.DBProductService;
 import com.study.service.ProductService;
 import com.study.web.filter.AdminSecurityFilter;

@@ -1,8 +1,6 @@
-package com.study.web.servlet;
+package com.study.web.servlet.templater;
 
 import com.study.ServerMain;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.WebappTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -18,6 +16,7 @@ public class PageGenerator {
 
     private PageGenerator() {
         cfg = new Configuration();
+        cfg.setClassForTemplateLoading(ServerMain.class,HTML_DIR);
     }
 
     public static PageGenerator getInstance(){
@@ -27,11 +26,6 @@ public class PageGenerator {
     public String getPage(String filename, Map<String, Object> data) {
         Writer stream = new StringWriter();
         try {
-            //ClassLoader cl =  getClass().getClassLoader();
-            //InputStream is =cl.getResourceAsStream("product/"+filename);
-
-
-            cfg.setClassForTemplateLoading(ServerMain.class,HTML_DIR);
             Template template = cfg.getTemplate(filename);
             template.process(data, stream);
         } catch (IOException | TemplateException e) {
