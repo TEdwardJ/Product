@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Product SHOP</title>
+</head>
+<body>
+<#include "navbar.html">
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Number</th>
+        <th scope="col">Total
+    </tr>
+    <#assign x = 0>
+    <#assign total = 0>
+    <#list cartitems as cartitem>
+    <tr><TD>${x+1}<TD>${cartitem.product.name}<TD>${cartitem.product.price}<TD>${cartitem.number}<TD>${cartitem.number*cartitem.product.price}
+            <#assign x =x + 1>
+            <#assign total =total + cartitem.number*cartitem.product.price>
+        </#list>
+
+    <TR><TH scope=""row>Total:<TD colspan="3" align="left">${x}<TD>${total}
+</TABLE>
+</body>
+</html>
+
