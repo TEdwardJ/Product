@@ -5,7 +5,7 @@ import com.study.service.ProductService;
 
 import javax.servlet.http.HttpServlet;
 
-public class AbstractProductServlet extends HttpServlet {
+public abstract class AbstractProductServlet extends HttpServlet {
     ProductService productService;
 
     public AbstractProductServlet(ProductService productService) {

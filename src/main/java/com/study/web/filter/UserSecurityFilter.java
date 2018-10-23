@@ -19,8 +19,8 @@ public class UserSecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        boolean isAuth = authService.checkLoggedUserAndRole(httpServletRequest, UserRole.USER)||
-                authService.checkLoggedUserAndRole(httpServletRequest, UserRole.ADMIN);
+        boolean isAuth = authService.checkLoggedUserAndRole(httpServletRequest.getCookies(), UserRole.USER)||
+                authService.checkLoggedUserAndRole(httpServletRequest.getCookies(), UserRole.ADMIN);
 
         if (isAuth) {
             chain.doFilter(request, response);

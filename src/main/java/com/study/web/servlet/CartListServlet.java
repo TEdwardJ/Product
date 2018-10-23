@@ -1,7 +1,6 @@
 package com.study.web.servlet;
 
 import com.study.entity.Cart;
-import com.study.entity.Product;
 import com.study.security.AuthenticationService;
 import com.study.security.entity.Session;
 import com.study.service.ProductService;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CartListServlet extends AbstractProductServlet {
@@ -30,7 +28,6 @@ public class CartListServlet extends AbstractProductServlet {
 
         PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
-        List<Product> list = productService.getAll();
 
         attributes.put("cartitems", cart.getContent());
         attributes.put("user", session.getUser().getLogin());

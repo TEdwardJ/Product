@@ -20,12 +20,7 @@ public class GuestSecurityFilter implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         boolean isAuth = authService.checkLoggedUserAndRole(httpServletRequest, UserRole.GUEST);
 
-        if (isAuth) {
-            chain.doFilter(request, response);
-        } else {
-            chain.doFilter(request, response);
-        }
-
+        chain.doFilter(request, response);
     }
 
     @Override

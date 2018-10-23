@@ -1,8 +1,7 @@
 package com.study;
 
 import com.study.dao.DbProperties;
-import com.study.dao.PostgresUserDAO;
-import com.study.security.AuthenticationService;
+import com.study.dao.JDBCUserDao;
 import com.study.security.entity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.text.RandomStringGenerator;
@@ -12,7 +11,7 @@ import javax.sql.DataSource;
 import java.util.Random;
 
 public class RMain {
-    private static PostgresUserDAO userDAO = new PostgresUserDAO(getDataSource());
+    private static JDBCUserDao userDAO = new JDBCUserDao(getDataSource());
     private static Random r = new Random();
     private static RandomStringGenerator rs = new RandomStringGenerator
             .Builder()

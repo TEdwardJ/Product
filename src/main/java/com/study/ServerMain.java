@@ -1,12 +1,13 @@
 package com.study;
 
 import com.study.dao.DbProperties;
-import com.study.dao.PostgresProductDAO;
-import com.study.dao.PostgresUserDAO;
+import com.study.dao.JDBCProductDao;
+import com.study.dao.JDBCUserDao;
 import com.study.security.AuthenticationService;
-import com.study.security.DBAuthenticationService;
-import com.study.service.DBProductService;
+import com.study.security.DefaultAuthenticationService;
+import com.study.service.DefaultProductService;
 import com.study.service.ProductService;
+import com.study.service.DefaultUserService;
 import com.study.web.filter.AdminSecurityFilter;
 import com.study.web.filter.GuestSecurityFilter;
 import com.study.web.filter.UserSecurityFilter;
@@ -25,9 +26,10 @@ public class ServerMain {
 
     public static void main(String[] args) throws Exception {
         DataSource dataSource = getDataSource();
-        ProductService productService = new DBProductService(new PostgresProductDAO(dataSource));
+        ProductService productService = new DefaultProductService(new JDBCProductDao(dataSource));
+        DefaultUserService userService = new DefaultUserService(new JDBCUserDao(dataSource));
 
-        AuthenticationService authService = new DBAuthenticationService(new PostgresUserDAO(dataSource));
+        AuthenticationService authService = new DefaultAuthenticationService(userService);
 
         ProductListServlet productListServlet = new ProductListServlet(productService);
 

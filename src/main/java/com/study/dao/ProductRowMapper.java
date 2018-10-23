@@ -14,16 +14,31 @@ import java.util.List;
 public class ProductRowMapper {
 
 
-    public List<Product> getRow(ResultSet resultSet) throws SQLException {
+    public List<Product> getRows(ResultSet resultSet) throws SQLException {
         List<Product> list = new ArrayList<>();
         while (resultSet.next()){
-            Product product = new Product(Integer.valueOf(resultSet.getString("id")),
-                    resultSet.getString("picturePath"),
-                    resultSet.getString("name"),
-                    Double.valueOf(resultSet.getString("price")),
-                    LocalDateTime.ofInstant(Instant.ofEpochMilli(resultSet.getTimestamp("addedDate").getTime()), ZoneId.systemDefault()));
+            Product product = mapProduct(resultSet);
             list.add(product);
         }
         return list;
+    }
+
+    public Product getRow(ResultSet resultSet) throws SQLException {
+        Product product;
+        if (resultSet.next()){
+            product = mapProduct(resultSet);
+            return product;
+        }
+        return null;
+    }
+
+    private Product mapProduct(ResultSet resultSet) throws SQLException {
+        Product product;
+        product = new Product(Integer.valueOf(resultSet.getString("id")),
+                resultSet.getString("picturePath"),
+                resultSet.getString("name"),
+                Double.valueOf(resultSet.getString("price")),
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(resultSet.getTimestamp("addedDate").getTime()), ZoneId.systemDefault()));
+        return product;
     }
 }

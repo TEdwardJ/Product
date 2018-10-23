@@ -1,25 +1,24 @@
 package com.study.security;
 
-import com.study.dao.UserDAO;
 import com.study.security.entity.Session;
 import com.study.security.entity.User;
 import com.study.security.entity.UserRole;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 public interface AuthenticationService {
 
     final static int MAX_AGE = 60*60*2;
 
-    User getLoggedUser(String token);
+    boolean checkLoggedUser(Cookie[] cookies);
 
-    boolean checkLoggedUser(HttpServletRequest request);
-    boolean checkLoggedUserAndRole(HttpServletRequest request, UserRole role);
+    boolean checkLoggedUserAndRole(Cookie[] cookies, UserRole role);
 
-    void logout(HttpServletRequest request);
+    void logout(Cookie[] cookie);
 
     Session auth(String user, String password);
 
-    Session getSession(HttpServletRequest request);
+    Session getSession(String token);
 
 }

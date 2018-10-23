@@ -1,18 +1,17 @@
 package com.study.service;
 
-import com.study.dao.PostgresProductDAO;
-import com.study.dao.ProductDAO;
+import com.study.dao.ProductDao;
 import com.study.entity.Product;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class DBProductService implements ProductService {
+public class DefaultProductService implements ProductService {
 
 
-    private ProductDAO dao;
+    private ProductDao dao;
 
-    public DBProductService(ProductDAO dao) {
+    public DefaultProductService(ProductDao dao) {
         this.dao = dao;
     }
 
@@ -44,7 +43,7 @@ public class DBProductService implements ProductService {
     }
 
     public Product getOne(int id){
-        return dao.getOne(id);
+        return dao.getById(id);
     }
 }
 

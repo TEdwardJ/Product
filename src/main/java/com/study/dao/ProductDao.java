@@ -4,10 +4,7 @@ import com.study.entity.Product;
 
 import java.util.List;
 
-public interface ProductDAO {
-    boolean open();
-
-    void close();
+public interface ProductDao {
 
     void delete(int id);
 
@@ -16,7 +13,7 @@ public interface ProductDAO {
     void update(Product product);
 
     List<Product> getAll();
-    Product getOne(int id);
+    Product getById(int id);
 }
 
 

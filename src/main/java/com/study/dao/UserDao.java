@@ -8,10 +8,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface UserDAO {
-        boolean open();
-
-        void close();
+public interface UserDao {
 
         void update(User user);
 
