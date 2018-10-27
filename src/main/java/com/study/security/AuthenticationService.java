@@ -19,6 +19,8 @@ public interface AuthenticationService {
 
     Session auth(String user, String password);
 
+    public String getUserToken(Cookie[] cookies);
+
     Session getSession(String token);
 
 }

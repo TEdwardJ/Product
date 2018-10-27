@@ -9,20 +9,27 @@ import java.util.List;
 public class DefaultProductService implements ProductService {
 
 
-    private ProductDao dao;
+    private ProductDao productDao;
+
+    public void setProductDao(ProductDao productDao) {
+        this.productDao = productDao;
+    }
 
     public DefaultProductService(ProductDao dao) {
-        this.dao = dao;
+        this.productDao = dao;
+    }
+
+    public DefaultProductService() {
     }
 
     @Override
     public void add(Product product) {
-        dao.insert(product);
+        productDao.insert(product);
     }
 
     @Override
     public void update(Product product) {
-        dao.update(product);
+        productDao.update(product);
     }
 
     @Override
@@ -33,17 +40,17 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public List<Product> getAll() {
-        List<Product> list = dao.getAll();
+        List<Product> list = productDao.getAll();
         //list.sort((t1,t2)->t2.getId().compareTo(t1.getId()));
         return list;
     }
 
     public void delete(int id){
-        dao.delete(id);
+        productDao.delete(id);
     }
 
     public Product getOne(int id){
-        return dao.getById(id);
+        return productDao.getById(id);
     }
 }
 

@@ -13,6 +13,10 @@ import java.util.Map;
 
 public class ProductListServlet extends AbstractProductServlet {
 
+    public ProductListServlet() {
+        super();
+    }
+
     public ProductListServlet(ProductService productService) {
         super(productService);
     }
@@ -23,7 +27,7 @@ public class ProductListServlet extends AbstractProductServlet {
 
             PageGenerator pageGenerator = PageGenerator.getInstance();
             Map<String, Object> attributes = new HashMap();
-            List<Product> list = productService.getAll();
+            List<Product> list = getProductService().getAll();
 
             attributes.put("products", list);
             resp.getWriter().println(pageGenerator.getPage("index.html", attributes));

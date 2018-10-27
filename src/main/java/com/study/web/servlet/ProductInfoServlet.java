@@ -12,6 +12,9 @@ import java.util.Map;
 
 public class ProductInfoServlet extends AbstractProductServlet {
 
+    public ProductInfoServlet() {
+        super();
+    }
 
     public ProductInfoServlet(ProductService productService) {
         super(productService);
@@ -23,7 +26,7 @@ public class ProductInfoServlet extends AbstractProductServlet {
             PageGenerator pageGenerator = PageGenerator.getInstance();
             Map<String, Object> attributes = new HashMap();
             int id = Integer.valueOf(req.getParameter("id"));
-            Product product = productService.getOne(id);
+            Product product = getProductService().getOne(id);
             attributes.put("product", product);
             resp.getWriter().println(pageGenerator.getPage("productInfo.html", attributes));
             resp.setContentType("text/html;charset=utf-8");

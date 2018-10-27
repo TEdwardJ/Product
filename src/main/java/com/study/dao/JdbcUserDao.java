@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCUserDao implements UserDao {
+public class JdbcUserDao implements UserDao {
 
     private static final String USER_UPD_QUERY = "UPDATE shop.users set hashedPassword = ?, sole = ?, role = ? WHERE \"user\" = ? ";
     private static final String GET_USER_BY_LOGIN = "SELECT \"user\" username,password,role,sole, hashedPassword FROM shop.users t WHERE t.user = ? ;";
@@ -15,7 +15,10 @@ public class JDBCUserDao implements UserDao {
 
     private DataSource dataSource;
 
-    public JDBCUserDao(DataSource dataSource) {
+    public JdbcUserDao() {
+    }
+
+    public JdbcUserDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -66,4 +69,7 @@ public class JDBCUserDao implements UserDao {
         return null;
     }
 
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

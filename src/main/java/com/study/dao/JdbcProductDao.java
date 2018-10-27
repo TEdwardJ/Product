@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JDBCProductDao implements ProductDao {
+public class JdbcProductDao implements ProductDao {
 
     private static final String ALL_PRODUCTS_QUERY = "SELECT * FROM shop.products";
     private static final String PRODUCT_DEL_QUERY = "DELETE FROM shop.products WHERE id = ? ";
@@ -20,10 +20,16 @@ public class JDBCProductDao implements ProductDao {
     private DataSource dataSource;
 
 
-    public JDBCProductDao(DataSource dataSource) {
+    public JdbcProductDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    public JdbcProductDao() {
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void delete(int id) {

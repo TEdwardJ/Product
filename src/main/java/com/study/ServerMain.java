@@ -1,17 +1,16 @@
 package com.study;
 
 import com.study.dao.DbProperties;
-import com.study.dao.JDBCProductDao;
-import com.study.dao.JDBCUserDao;
 import com.study.security.AuthenticationService;
 import com.study.security.DefaultAuthenticationService;
 import com.study.service.DefaultProductService;
 import com.study.service.ProductService;
-import com.study.service.DefaultUserService;
 import com.study.web.filter.AdminSecurityFilter;
 import com.study.web.filter.GuestSecurityFilter;
 import com.study.web.filter.UserSecurityFilter;
 import com.study.web.servlet.*;
+import edu.eteslenko.ioc.ApplicationContext;
+import edu.eteslenko.ioc.ClassPathApplicationContext;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -24,33 +23,31 @@ import java.util.EnumSet;
 
 public class ServerMain {
 
+
     public static void main(String[] args) throws Exception {
-        DataSource dataSource = getDataSource();
-        ProductService productService = new DefaultProductService(new JDBCProductDao(dataSource));
-        DefaultUserService userService = new DefaultUserService(new JDBCUserDao(dataSource));
 
-        AuthenticationService authService = new DefaultAuthenticationService(userService);
+        ClassPathApplicationContext xmlContext = new ClassPathApplicationContext("conf.xml");
+        ProductService productService = (DefaultProductService)xmlContext.getBean("productService");//new DefaultProductService(productDao);
 
-        ProductListServlet productListServlet = new ProductListServlet(productService);
+        AuthenticationService authService = (DefaultAuthenticationService)xmlContext.getBean("authenticationService");//new DefaultAuthenticationService(userService);
 
-        AddProductServlet addNewServlet = new AddProductServlet(productService);
+        ProductListServlet productListServlet = (ProductListServlet)xmlContext.getBean("productListServlet");//new ProductListServlet(productService);
 
-        ProductInfoServlet productInfoServlet = new ProductInfoServlet(productService);
+        AddProductServlet addNewServlet = (AddProductServlet)xmlContext.getBean("addProductServlet");//new ProductListServlet(productService);
 
-        DeleteServlet deleteServlet = new DeleteServlet(productService);
+        ProductInfoServlet productInfoServlet = (ProductInfoServlet)xmlContext.getBean("productInfoServlet");//new ProductListServlet(productService);
 
-        ProductEditServlet productEditServlet = new ProductEditServlet(productService);
+        DeleteServlet deleteServlet = (DeleteServlet)xmlContext.getBean("deleteServlet");//new DeleteServlet(productService);
 
-        CartListServlet cartListServlet = new CartListServlet(productService);
-        cartListServlet.setAuthService(authService);
+        ProductEditServlet productEditServlet = (ProductEditServlet)xmlContext.getBean("productEditServlet");;
 
-        AddCartItemServlet addCartItemServlet = new AddCartItemServlet(productService);
-        addCartItemServlet.setAuthService(authService);
+        CartListServlet cartListServlet = (CartListServlet)xmlContext.getBean("cartListServlet");//new CartListServlet(productService);
 
-        LoginServlet loginServlet = new LoginServlet();
+        AddCartItemServlet addCartItemServlet = (AddCartItemServlet)xmlContext.getBean("addCartItemServlet");// new AddCartItemServlet(productService);
 
+        LoginServlet loginServlet = (LoginServlet)xmlContext.getBean(LoginServlet.class);
 
-        loginServlet.setAuthService(authService);
+        //loginServlet.setAuthService(authService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(productListServlet), "/*");
@@ -71,18 +68,19 @@ public class ServerMain {
         //context.addFilter(new FilterHolder(adminRoleFilter),"/product/edit",EnumSet.of(DispatcherType.REQUEST));
         context.addFilter(new FilterHolder(guestRoleFilter),"/login",EnumSet.of(DispatcherType.REQUEST));
         context.addFilter(new FilterHolder(userRoleFilter),"/",EnumSet.of(DispatcherType.REQUEST));
+        context.addFilter(new FilterHolder(userRoleFilter),"/cart/",EnumSet.of(DispatcherType.REQUEST));
         context.addFilter(new FilterHolder(userRoleFilter),"/cart/add/*",EnumSet.of(DispatcherType.REQUEST));
 
         Server server = new Server(8080);
         server.setHandler(context);
 
         server.start();
-
     }
 
-    public static DataSource getDataSource(){
-        DbProperties dbProperties = new DbProperties();
+    public static DataSource getDataSource(ApplicationContext context){
+        DbProperties dbProperties = (DbProperties)context.getBean("dbProperties");
         PGSimpleDataSource ds = new PGSimpleDataSource();
+
         ds.setServerName(dbProperties.getServer());
         ds.setDatabaseName(dbProperties.getDatabase());
         ds.setPortNumber(dbProperties.getPort());

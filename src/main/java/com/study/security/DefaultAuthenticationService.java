@@ -18,7 +18,14 @@ public class DefaultAuthenticationService implements AuthenticationService {
     private DefaultUserService userService;
     private Map<String, Session> userSessionList = new HashMap<>();
 
+    public DefaultAuthenticationService() {
+    }
+
     public DefaultAuthenticationService(DefaultUserService userService) {
+        this.userService = userService;
+    }
+
+    public void setUserService(DefaultUserService userService) {
         this.userService = userService;
     }
 
@@ -45,7 +52,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
         //request.getSession().removeAttribute("user_login");
     }
 
-    private String getUserToken(Cookie[] cookies) {
+    public String getUserToken(Cookie[] cookies) {
         String token = "";
         if (cookies != null) {
             token = Arrays.stream(cookies)

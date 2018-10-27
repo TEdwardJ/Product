@@ -2,6 +2,8 @@ package com.study.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.Collections;
 import java.util.Properties;
 
 public class DbProperties {
@@ -14,6 +16,14 @@ public class DbProperties {
 
     public DbProperties() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties");
+
+        try {
+            for (URL root : Collections.list(this.getClass().getClassLoader().getResources(""))) {
+                System.out.println(root);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Properties props = new Properties();
         try {

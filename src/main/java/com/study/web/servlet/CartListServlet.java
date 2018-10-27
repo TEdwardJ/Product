@@ -17,13 +17,17 @@ public class CartListServlet extends AbstractProductServlet {
 
     private AuthenticationService authService;
 
+    public CartListServlet() {
+        super();
+    }
+
     public CartListServlet(ProductService productService) {
         super(productService);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Session session =  authService.getSession(req);
+        Session session =  authService.getSession(authService.getUserToken(req.getCookies()));
         Cart cart =session.getCart();
 
         PageGenerator pageGenerator = PageGenerator.getInstance();

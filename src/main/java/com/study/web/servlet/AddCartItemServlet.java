@@ -15,8 +15,14 @@ import java.util.regex.Pattern;
 
 public class AddCartItemServlet extends AbstractProductServlet {
 
-    private AuthenticationService authService;
     private static final Pattern URL_ID_PATTERN = Pattern.compile("(?<id>\\d+)$");
+
+    private AuthenticationService authService;
+
+    public AddCartItemServlet() {
+        super();
+    }
+
     public AddCartItemServlet(ProductService productService) {
         super(productService);
     }
@@ -24,9 +30,9 @@ public class AddCartItemServlet extends AbstractProductServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = getIdFromUrl(req.getRequestURL().toString());
-        Product product = productService.getOne(id);
+        Product product = getProductService().getOne(id);
         if (product!=null){
-            Session session =  authService.getSession(req);
+            Session session =  authService.getSession(authService.getUserToken(req.getCookies()));
             Cart cart =session.getCart();
             cart.addProduct(product);
         }
@@ -40,7 +46,6 @@ public class AddCartItemServlet extends AbstractProductServlet {
         }
         return null;
     }
-
 
     public void setAuthService(AuthenticationService authService) {
         this.authService = authService;

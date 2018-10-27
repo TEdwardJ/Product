@@ -1,0 +1,52 @@
+<beans>
+    <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
+        <property name="user" value="postgres"/>
+        <property name="password" value="TestAll"/>
+        <property name="serverName" value="localhost"/>
+        <property name="databaseName" value="postgres"/>
+        <property name="portNumber" value="5432"/>
+    </bean>
+    <bean id="dbProperties" class="com.study.dao.DbProperties">
+    </bean>
+    <bean id="productDao" class="com.study.dao.JdbcProductDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="userDao" class="com.study.dao.JdbcUserDao">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean id="productService" class="com.study.service.DefaultProductService">
+        <property name="productDao" ref="productDao"/>
+    </bean>
+    <bean id="userService" class="com.study.service.DefaultUserService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="authenticationService" class="com.study.security.DefaultAuthenticationService">
+        <property name="userService" ref="userService"/>
+    </bean>
+    <bean id="productListServlet" class="com.study.web.servlet.ProductListServlet">
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="loginServlet" class="com.study.web.servlet.LoginServlet">
+        <property name="authService" ref="authenticationService"/>
+    </bean>
+    <bean id="addProductServlet" class="com.study.web.servlet.AddProductServlet">
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="productInfoServlet" class="com.study.web.servlet.ProductInfoServlet">
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="deleteServlet" class="com.study.web.servlet.DeleteServlet">
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="productEditServlet" class="com.study.web.servlet.ProductEditServlet">
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="addCartItemServlet" class="com.study.web.servlet.AddCartItemServlet">
+        <property name="authService" ref="authenticationService"/>
+        <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="cartListServlet" class="com.study.web.servlet.CartListServlet">
+        <property name="authService" ref="authenticationService"/>
+        <property name="productService" ref="productService"/>
+    </bean>
+</beans>

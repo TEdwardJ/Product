@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class AddProductServlet extends AbstractProductServlet {
 
+    public AddProductServlet() {
+        super();
+    }
 
     public AddProductServlet(ProductService productService) {
         super(productService);
@@ -30,7 +33,7 @@ public class AddProductServlet extends AbstractProductServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        productService.add(new Product(
+        getProductService().add(new Product(
                 req.getParameter("picturePath"),
                 req.getParameter("name"),
                 Double.valueOf(req.getParameter("price")),

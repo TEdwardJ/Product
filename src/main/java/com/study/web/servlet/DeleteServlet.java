@@ -15,6 +15,9 @@ public class DeleteServlet extends AbstractProductServlet {
 
     private static final Pattern URL_ID_PATTERN = Pattern.compile("(?<id>\\d+)$");
 
+    public DeleteServlet() {
+    }
+
     public DeleteServlet(ProductService productService) {
         super(productService);
     }
@@ -23,7 +26,7 @@ public class DeleteServlet extends AbstractProductServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int id = getIdFromUrl(req.getRequestURL().toString());
-        productService.delete(id);
+        getProductService().delete(id);
         resp.sendRedirect("/");
     }
 

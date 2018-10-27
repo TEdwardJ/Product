@@ -14,6 +14,9 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
     private AuthenticationService authService;
 
+    public LoginServlet() {
+    }
+
     public void setAuthService(AuthenticationService authService) {
         this.authService = authService;
     }
@@ -43,7 +46,7 @@ public class LoginServlet extends HttpServlet {
         PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
         if (request.getParameter("logout")!=null){
-            authService.logout(request);
+            authService.logout(request.getCookies());
         }
 
         response.getWriter().println(pageGenerator.getPage("login.html",attributes));

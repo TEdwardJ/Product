@@ -4,8 +4,10 @@ import com.study.dao.UserDao;
 import com.study.security.entity.User;
 
 public class DefaultUserService {
-    UserDao userDao;
+    private UserDao userDao;
 
+    public DefaultUserService() {
+    }
 
     public DefaultUserService(UserDao userDao) {
         this.userDao = userDao;
@@ -15,5 +17,7 @@ public class DefaultUserService {
         return userDao.getOne(login);
     }
 
-
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
 }
