@@ -1,1 +1,0 @@
-web: java -Done-jar.main.class=com.study.ServerMain -Dfile.encoding=windows-1251 -jar product-store-1.0-SNAPSHOT.one-jar.jar
