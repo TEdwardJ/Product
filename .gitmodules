@@ -1,0 +1,3 @@
+[submodule "lib/ioccontainer"]
+	path = lib/ioccontainer
+	url = https://git.heroku.com/agile-castle-22753.git
