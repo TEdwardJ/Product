@@ -1,2 +1,5 @@
 
 
+[submodule "lib/ioccontainer"]
+	path = lib/ioccontainer
+	url = https://github.com/TEdwardJ/IOCContainer.git
