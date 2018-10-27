@@ -1,6 +1,0 @@
-[submodule "lib/ioccontainer"]
-	path = lib/ioccontainer
-	url = https://git.heroku.com/agile-castle-22753.git
-[submodule "agile-castle-22753"]
-	path = agile-castle-22753
-	url = https://git.heroku.com/agile-castle-22753.git
