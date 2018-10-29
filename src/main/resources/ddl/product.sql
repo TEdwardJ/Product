@@ -1,5 +1,12 @@
 -- Table: shop.products
+-- SEQUENCE: shop.table_name_id_seq
 
+-- DROP SEQUENCE shop.table_name_id_seq;
+
+CREATE SEQUENCE shop.table_name_id_seq;
+
+ALTER SEQUENCE shop.table_name_id_seq
+    OWNER TO postgres;
 -- DROP TABLE shop.products;
 
 CREATE TABLE shop.products

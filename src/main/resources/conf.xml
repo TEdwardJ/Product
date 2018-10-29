@@ -1,10 +1,5 @@
 <beans>
     <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
-        <property name="user" value="postgres"/>
-        <property name="password" value="TestAll"/>
-        <property name="serverName" value="localhost"/>
-        <property name="databaseName" value="postgres"/>
-        <property name="portNumber" value="5432"/>
     </bean>
     <bean id="dbProperties" class="com.study.dao.DbProperties">
     </bean>
@@ -48,5 +43,7 @@
     <bean id="cartListServlet" class="com.study.web.servlet.CartListServlet">
         <property name="authService" ref="authenticationService"/>
         <property name="productService" ref="productService"/>
+    </bean>
+    <bean id="dataSourcePostProcessor" class="com.study.DbBeanPostProcessor">
     </bean>
 </beans>

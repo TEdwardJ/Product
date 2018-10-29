@@ -20,12 +20,15 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.servlet.DispatcherType;
 import javax.sql.DataSource;
 import java.util.EnumSet;
+import java.util.Optional;
 
 public class ServerMain {
 
 
     public static void main(String[] args) throws Exception {
+        System.out.println(System.getenv("PORT")+" is the port");
 
+        Integer port = Integer.parseInt(Optional.ofNullable(System.getenv("PORT")).orElse("8080"));
         ClassPathApplicationContext xmlContext = new ClassPathApplicationContext("conf.xml");
         ProductService productService = (DefaultProductService)xmlContext.getBean("productService");//new DefaultProductService(productDao);
 
@@ -71,21 +74,11 @@ public class ServerMain {
         context.addFilter(new FilterHolder(userRoleFilter),"/cart/",EnumSet.of(DispatcherType.REQUEST));
         context.addFilter(new FilterHolder(userRoleFilter),"/cart/add/*",EnumSet.of(DispatcherType.REQUEST));
 
-        Server server = new Server(8080);
+        Server server = new Server(port);
         server.setHandler(context);
 
         server.start();
     }
 
-    public static DataSource getDataSource(ApplicationContext context){
-        DbProperties dbProperties = (DbProperties)context.getBean("dbProperties");
-        PGSimpleDataSource ds = new PGSimpleDataSource();
-
-        ds.setServerName(dbProperties.getServer());
-        ds.setDatabaseName(dbProperties.getDatabase());
-        ds.setPortNumber(dbProperties.getPort());
-        ds.setUser(dbProperties.getUser());
-        ds.setPassword(dbProperties.getPassword());
-        return ds;
-    }
+    
 }

@@ -1,0 +1,2 @@
+ADMIN,admin,ADMIN,xmpyuhhzdy,0f3f04d9160ade629b8ce47af20e0e49
+USER,user,USER,ugeixvhfoy,6f2331a17191773a11bec05e099c61f8
