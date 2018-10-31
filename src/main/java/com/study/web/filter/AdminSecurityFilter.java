@@ -11,7 +11,14 @@ import java.io.IOException;
 public class AdminSecurityFilter implements Filter {
     private AuthenticationService authService;
 
+    public AdminSecurityFilter() {
+    }
+
     public AdminSecurityFilter(AuthenticationService authService) {
+        this.authService = authService;
+    }
+
+    public void setAuthService(AuthenticationService authService) {
         this.authService = authService;
     }
 

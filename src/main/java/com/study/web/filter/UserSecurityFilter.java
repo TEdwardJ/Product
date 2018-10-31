@@ -2,8 +2,12 @@ package com.study.web.filter;
 
 import com.study.security.AuthenticationService;
 import com.study.security.entity.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -11,9 +15,13 @@ import java.io.IOException;
 public class UserSecurityFilter implements Filter {
     private AuthenticationService authService;
 
-    public UserSecurityFilter(AuthenticationService authService) {
+    public UserSecurityFilter() {
+    }
+
+    public void setAuthService(AuthenticationService authService) {
         this.authService = authService;
     }
+
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

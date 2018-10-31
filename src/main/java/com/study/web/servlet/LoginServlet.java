@@ -35,14 +35,13 @@ public class LoginServlet extends HttpServlet {
 
             response.sendRedirect("/");
         } else{
-            //response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.sendRedirect("/login/");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println(request.getRequestURL());
-        HttpSession session = request.getSession(false);
+        //HttpSession session = request.getSession(false);
         PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
         if (request.getParameter("logout")!=null){

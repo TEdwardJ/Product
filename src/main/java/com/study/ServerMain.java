@@ -11,10 +11,7 @@ import com.study.web.filter.UserSecurityFilter;
 import com.study.web.servlet.*;
 import edu.eteslenko.ioc.ApplicationContext;
 import edu.eteslenko.ioc.ClassPathApplicationContext;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.FilterHolder;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
+
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.servlet.DispatcherType;
@@ -26,7 +23,7 @@ public class ServerMain {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(System.getenv("PORT")+" is the port");
+/*        System.out.println(System.getenv("PORT")+" is the port");
 
         Integer port = Integer.parseInt(Optional.ofNullable(System.getenv("PORT")).orElse("8080"));
         ClassPathApplicationContext xmlContext = new ClassPathApplicationContext("conf.xml");
@@ -77,7 +74,7 @@ public class ServerMain {
         Server server = new Server(port);
         server.setHandler(context);
 
-        server.start();
+        server.start();*/
     }
 
     

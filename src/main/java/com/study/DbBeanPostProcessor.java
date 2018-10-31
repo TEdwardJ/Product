@@ -1,10 +1,8 @@
 package com.study;
 
 import com.study.dao.DbProperties;
-import edu.eteslenko.config.BeanPostProcessor;
-import edu.eteslenko.ioc.ApplicationContext;
-import org.postgresql.ds.PGConnectionPoolDataSource;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import javax.sql.DataSource;
 import java.net.URI;
