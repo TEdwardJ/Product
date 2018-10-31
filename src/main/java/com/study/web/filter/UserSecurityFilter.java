@@ -22,7 +22,6 @@ public class UserSecurityFilter implements Filter {
         this.authService = authService;
     }
 
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
