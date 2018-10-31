@@ -19,10 +19,13 @@
     </tr>
     <#assign x = 0>
     <#list products as product>
-    <tr><TD><a href="/product/info?id=${product.id}">Details</a>
-        <TD>${product.name}<TD>${product.price}<TD>${product.addDate}
-        <TD><FORM style="display:inline" method="POST" action="/product/delete/${product.id}"><button type="submit" class="btn btn-warning" onclick="if (!confirm('Are you sure?')){ return;}">Delete</button></FORM>
-            <FORM style="display:inline" method="GET" action="/product/edit"><INPUT type="hidden" value="${product.id}" name="id"><button type="submit" class="btn btn-success">Edit</button></FORM>
+    <tr th:each="product : ${products}">
+        <TD><a href="/WEB-INF/product/info?id=${product.id}">Details</a>
+        <TD th:text="${product.name}">
+        <TD th:text="${product.price}">
+        <TD th:text="${product.addDate}">
+        <TD><FORM style="display:inline" method="POST" action="/WEB-INF/product/delete/${product.id}"><button type="submit" class="btn btn-warning" onclick="if (!confirm('Are you sure?')){ return;}">Delete</button></FORM>
+            <FORM style="display:inline" method="GET" action="/WEB-INF/product/edit"><INPUT type="hidden" value="${product.id}" name="id"><button type="submit" class="btn btn-success">Edit</button></FORM>
             <FORM style="display:inline" method="POST" action="/cart/add/${product.id}"><button type="submit" class="btn btn-primary">Add to Cart</button></FORM>
         <!--<TD><img src='${product.picturePath}'/>-->
         <#assign x =x + 1>

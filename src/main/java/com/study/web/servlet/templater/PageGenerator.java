@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.Map;
 
 public class PageGenerator {
-    private static final String HTML_DIR = "/product/";
+    private static final String HTML_DIR = "/WEB-INF/product/";
 
     private final static PageGenerator instance = new PageGenerator();
     private Configuration cfg;

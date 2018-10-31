@@ -28,7 +28,7 @@ public class ProductShopController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping(path={"/product/delete/{id}"},method = RequestMethod.POST)
+    @RequestMapping(path={"/WEB-INF/product/delete/{id}"},method = RequestMethod.POST)
     public void deleteProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable int id){
         productService.delete(id);
         try {
@@ -38,7 +38,7 @@ public class ProductShopController {
         }
     }
 
-    @RequestMapping(path={"/product/add"},method = RequestMethod.POST)
+    @RequestMapping(path={"/WEB-INF/product/add"},method = RequestMethod.POST)
     public void addProduct(HttpServletRequest request, HttpServletResponse response){
         productService.add(new Product(
                 request.getParameter("picturePath"),
@@ -72,46 +72,36 @@ public class ProductShopController {
         }
     }
 
-    @ResponseBody
     @RequestMapping(path={"/login"},method = RequestMethod.GET)
-    public void login(HttpServletRequest request, HttpServletResponse response){
+    public String login(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession(false);
-            PageGenerator pageGenerator = PageGenerator.getInstance();
+            //PageGenerator pageGenerator = PageGenerator.getInstance();
         if (request.getParameter("logout")!=null){
             authService.logout(request.getCookies());
         }
-        try {
-            response.getWriter().println(pageGenerator.getPage("login.html",null));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    return "login.html";
     }
 
-    @ResponseBody
     @RequestMapping(path = "/",method = RequestMethod.GET)
-    public void productList(HttpServletResponse resp){
+    public String productList(HttpServletResponse resp){
 
-        PageGenerator pageGenerator = PageGenerator.getInstance();
+        //PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
         List<Product> list = productService.getAll();
 
         attributes.put("products", list);
-        try {
-            resp.getWriter().println(pageGenerator.getPage("index.html", attributes));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return "index.html";
 
     }
 
     @ResponseBody
-    @RequestMapping(path = "/product/info",method = RequestMethod.GET)
+    @RequestMapping(path = "/WEB-INF/product/info",method = RequestMethod.GET)
     public void productInfo(HttpServletRequest req,HttpServletResponse resp){
         int id = Integer.valueOf(req.getParameter("id"));
         PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
         Product product = productService.getOne(id);
-        attributes.put("product", product);
+        attributes.put("WEB-INF/product", product);
 
         try {
             resp.getWriter().println(pageGenerator.getPage("productInfo.html", attributes));
@@ -123,7 +113,7 @@ public class ProductShopController {
 
 
     @ResponseBody
-    @RequestMapping(path = "/product/add/*",method = RequestMethod.GET)
+    @RequestMapping(path = "/WEB-INF/product/add/*",method = RequestMethod.GET)
     public void addProductForm(HttpServletRequest req,HttpServletResponse resp){
         PageGenerator pageGenerator = PageGenerator.getInstance();
         Map<String, Object> attributes = new HashMap();
