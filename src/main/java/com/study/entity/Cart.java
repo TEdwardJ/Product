@@ -22,6 +22,10 @@ public class Cart implements Iterable<CartItem>{
 
     }
 
+    public double getTotalSum(){
+        return getContent().stream().mapToDouble(t->t.getNumber()*t.getProduct().getPrice()).sum();
+    }
+
     @Override
     public Iterator<CartItem> iterator() {
         return cartSet.iterator();

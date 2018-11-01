@@ -14,6 +14,7 @@ public class DbBeanPostProcessor implements BeanPostProcessor {
         String dbUrl = System.getenv("DATABASE_URL");
 
             PGSimpleDataSource ds = (PGSimpleDataSource) dataSource;//new PGSimpleDataSource();
+
         if (dbUrl != null) {
 
             try {
@@ -32,12 +33,13 @@ public class DbBeanPostProcessor implements BeanPostProcessor {
             return ds;
 
         }else{
-            DbProperties dbProperties = new DbProperties();//(DbProperties)context.getBean("dbProperties");
+            DbProperties dbProperties = new DbProperties();
             ds.setServerName(dbProperties.getServer());
             ds.setDatabaseName(dbProperties.getDatabase());
             ds.setPortNumber(dbProperties.getPort());
             ds.setUser(dbProperties.getUser());
             ds.setPassword(dbProperties.getPassword());
+
         }
         return dataSource;
     }
@@ -51,7 +53,6 @@ public class DbBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object o, String s) {
         if (s.equals("dataSource")) {
-            System.out.println("post processor started!!!");
             o = configureDataSource((DataSource) o);
         }
         return o;

@@ -36,7 +36,7 @@ public class JdbcProductDao implements ProductDao {
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement stmt = connection.prepareStatement(PRODUCT_DEL_QUERY);) {
                 stmt.setInt(1, id);
-                System.out.println(stmt.executeUpdate());
+                stmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);

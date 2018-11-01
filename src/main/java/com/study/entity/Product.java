@@ -15,7 +15,10 @@ public class Product {
 
     private LocalDateTime addDate;
 
-    public Product(int id,String picturePath, String name, double price, LocalDateTime addDate) {
+    public Product() {
+    }
+
+    public Product(int id, String picturePath, String name, double price, LocalDateTime addDate) {
         this.id = id;
         this.picturePath = picturePath;
         this.name = name;

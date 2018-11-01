@@ -6,29 +6,28 @@
     <title>Add Product</title>
 </head>
 <body>
-<#include "navbar.html">
+<body><div th:insert="navbar.html" >...</div>
 <H1>Product info</H1>
 <table class="table">
-
     <tbody>
     <tr><td rowspan="3" style="width:220px"><div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="${product.picturePath}" alt="${product.name} ${product.price}">
+        <img class="card-img-top" th:src="@{${product.picturePath}}" th:alt="${product.name} +  ${product.price}">
         <div class="card-body">
-            <p class="card-text">${product.name}</p>
+            <p class="card-text" th:text="${product.name}"></p>
         </div>
     </div>
         <th scope="row">Name</th>
-        <td>${product.name}</td>
+        <td th:text="${product.name}">
 
     </tr>
     <tr>
         <th scope="row">Price</th>
-        <td>${product.price}</td>
+        <td th:text="${product.price}"></td>
 
     </tr>
     <tr>
         <th scope="row">For sale since</th>
-        <td>${product.addDate}</td>
+        <td th:text="${product.addDate}"></td>
     </tr>
 
     </tbody>

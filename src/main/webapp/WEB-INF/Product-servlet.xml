@@ -9,6 +9,7 @@
     <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine" />
         <property name="order" value="1" />
+        <property name="characterEncoding" value="utf-8"/>
         <property name="viewNames" value="*.html,*.xhtml" />
     </bean>
     <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
@@ -30,9 +31,6 @@
     <bean id="authenticationService" class="com.study.security.DefaultAuthenticationService">
         <property name="userService" ref="userService"/>
     </bean>
-    <bean id="loginServlet" class="com.study.web.servlet.LoginServlet">
-        <property name="authService" ref="authenticationService"/>
-    </bean>
     <bean id="dataSourcePostProcessor" class="com.study.DbBeanPostProcessor">
     </bean>
     <bean id="userSecurityFilter" class="com.study.web.filter.UserSecurityFilter">
@@ -49,6 +47,7 @@
         <property name="suffix" value=".html" />
         <!-- HTML is the default value, added here for the sake of clarity.          -->
         <property name="templateMode" value="HTML" />
+        <property name="characterEncoding" value="UTF-8" />
         <!-- Template cache is true by default. Set to false if you want             -->
         <!-- templates to be automatically updated when modified.                    -->
         <property name="cacheable" value="true" />
@@ -66,4 +65,6 @@
         <!-- compatibility.                                                          -->
         <property name="enableSpringELCompiler" value="true" />
     </bean>
+
+
 </beans>

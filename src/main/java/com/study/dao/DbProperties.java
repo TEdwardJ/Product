@@ -17,14 +17,6 @@ public class DbProperties {
     public DbProperties() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties");
 
-        try {
-            for (URL root : Collections.list(this.getClass().getClassLoader().getResources(""))) {
-                System.out.println(root);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         Properties props = new Properties();
         try {
             props.load(is);
