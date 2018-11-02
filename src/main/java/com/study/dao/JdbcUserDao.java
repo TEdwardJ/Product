@@ -1,18 +1,22 @@
 package com.study.dao;
 
 import com.study.security.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcUserDao implements UserDao {
 
     private static final String USER_UPD_QUERY = "UPDATE shop.users set hashedPassword = ?, sole = ?, role = ? WHERE \"user\" = ? ";
     private static final String GET_USER_BY_LOGIN = "SELECT \"user\" username,password,role,sole, hashedPassword FROM shop.users t WHERE t.user = ? ;";
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
 
+    @Autowired
     private DataSource dataSource;
 
     public JdbcUserDao() {

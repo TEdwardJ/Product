@@ -4,14 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package = "com.study" />
-    <mvc:annotation-driven />
+    <context:component-scan base-package = "com.study.web.controller" />
+    <!--<mvc:annotation-driven />-->
 
     <bean id="userSecurityFilter" class="com.study.web.filter.UserSecurityFilter">
-        <property name="authService" ref="authenticationService"/>
     </bean>
     <bean id="adminSecurityFilter" class="com.study.web.filter.AdminSecurityFilter">
-        <property name="authService" ref="authenticationService"/>
     </bean>
     <!-- SpringResourceTemplateResolver automatically integrates with Spring's own -->
     <!-- resource resolution infrastructure, which is highly recommended.          -->

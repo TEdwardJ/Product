@@ -2,8 +2,12 @@ package com.study.service;
 
 import com.study.dao.UserDao;
 import com.study.security.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DefaultUserService {
+    @Autowired
     private UserDao userDao;
 
     public DefaultUserService() {

@@ -2,13 +2,16 @@ package com.study.service;
 
 import com.study.dao.ProductDao;
 import com.study.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Service
 public class DefaultProductService implements ProductService {
 
-
+    @Autowired
     private ProductDao productDao;
 
     public void setProductDao(ProductDao productDao) {

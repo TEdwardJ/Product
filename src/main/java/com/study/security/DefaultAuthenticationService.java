@@ -5,6 +5,8 @@ import com.study.security.entity.User;
 import com.study.security.entity.UserRole;
 import com.study.service.DefaultUserService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import java.time.LocalDateTime;
@@ -13,8 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+
 public class DefaultAuthenticationService implements AuthenticationService {
 
+    @Autowired
     private DefaultUserService userService;
     private Map<String, Session> userSessionList = new HashMap<>();
 
@@ -46,10 +50,9 @@ public class DefaultAuthenticationService implements AuthenticationService {
     }
 
     @Override
-    public void logout(Cookie[] cookies) {
-        String token = getUserToken(cookies);
+    public void logout(Cookie cookie) {
+        String token = cookie.getValue();
         userSessionList.remove(token);
-        //request.getSession().removeAttribute("user_login");
     }
 
     public String getUserToken(Cookie[] cookies) {

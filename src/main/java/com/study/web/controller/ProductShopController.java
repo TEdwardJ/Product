@@ -1,4 +1,4 @@
-package com.study.controller;
+package com.study.web.controller;
 
 import com.study.entity.Product;
 import com.study.security.AuthenticationService;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 public class ProductShopController {
@@ -60,10 +59,9 @@ public class ProductShopController {
     }
 
     @RequestMapping(path = {"/login"}, method = RequestMethod.GET)
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        if (request.getParameter("logout") != null) {
-            authService.logout(request.getCookies());
+    public String login(@CookieValue("user-token") Cookie cookie, @RequestParam(required = false) String logout) {
+        if (logout != null) {
+            authService.logout(cookie);
         }
         return "login.html";
     }
@@ -86,8 +84,7 @@ public class ProductShopController {
 
     @RequestMapping(path = "/product/add/*", method = RequestMethod.GET)
     public String addProductForm(Model model) {
-        Product product = new Product();
-        model.addAttribute("product", product);
+        model.addAttribute("product", new Product());
         return "addProduct.html";
     }
 
@@ -101,7 +98,7 @@ public class ProductShopController {
 
 
     @RequestMapping(path = "/product/edit", method = RequestMethod.POST)
-    public String saveProductForm(HttpServletRequest req, Model model) {
+    public String saveProductForm(HttpServletRequest req) {
         if (req.getParameter("id").isEmpty()) {
             productService.add(new Product(
                     req.getParameter("picturePath"),

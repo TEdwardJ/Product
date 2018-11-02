@@ -1,12 +1,15 @@
 package com.study.dao;
 
 import com.study.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcProductDao implements ProductDao {
 
     private static final String ALL_PRODUCTS_QUERY = "SELECT * FROM shop.products";
@@ -17,6 +20,7 @@ public class JdbcProductDao implements ProductDao {
 
     private ProductRowMapper rowMapper = new ProductRowMapper();
 
+    @Autowired
     private DataSource dataSource;
 
 

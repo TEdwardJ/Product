@@ -15,7 +15,7 @@ public interface AuthenticationService {
 
     boolean checkLoggedUserAndRole(Cookie[] cookies, UserRole role);
 
-    void logout(Cookie[] cookie);
+    void logout(Cookie cookie);
 
     Session auth(String user, String password);
 
