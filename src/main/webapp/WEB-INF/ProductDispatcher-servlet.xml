@@ -6,27 +6,7 @@
 
     <context:component-scan base-package = "com.study" />
     <mvc:annotation-driven />
-    <bean id="dataSource" class="org.postgresql.ds.PGSimpleDataSource">
-    </bean>
-    <bean id="dbProperties" class="com.study.dao.DbProperties">
-    </bean>
-    <bean id="productDao" class="com.study.dao.JdbcProductDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    <bean id="userDao" class="com.study.dao.JdbcUserDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    <bean id="productService" class="com.study.service.DefaultProductService">
-        <property name="productDao" ref="productDao"/>
-    </bean>
-    <bean id="userService" class="com.study.service.DefaultUserService">
-        <property name="userDao" ref="userDao"/>
-    </bean>
-    <bean id="authenticationService" class="com.study.security.DefaultAuthenticationService">
-        <property name="userService" ref="userService"/>
-    </bean>
-    <bean id="dataSourcePostProcessor" class="com.study.DbBeanPostProcessor">
-    </bean>
+
     <bean id="userSecurityFilter" class="com.study.web.filter.UserSecurityFilter">
         <property name="authService" ref="authenticationService"/>
     </bean>

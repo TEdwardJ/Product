@@ -50,6 +50,7 @@ public class ProductShopController {
 
             Cookie cookie = new Cookie("user-token", currentSession.getToken());
             cookie.setMaxAge(AuthenticationService.MAX_AGE);
+            cookie.setPath("/");
             response.addCookie(cookie);
 
             return "redirect:/";
@@ -69,7 +70,6 @@ public class ProductShopController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String productList(Model model) {
-        List<Product> list = productService.getAll();
         model.addAttribute("products", productService.getAll());
         return "index.html";
 

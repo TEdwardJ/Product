@@ -5,6 +5,7 @@ import com.study.security.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -39,7 +40,9 @@ public class UserSecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        AuthenticationService authService = (AuthenticationService) WebApplicationContextUtils.getRequiredWebApplicationContext(filterConfig.getServletContext())
+                .getBean("authenticationService");
+        this.authService = authService;
     }
 
     @Override

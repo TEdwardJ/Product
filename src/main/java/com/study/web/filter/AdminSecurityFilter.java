@@ -2,6 +2,7 @@ package com.study.web.filter;
 
 import com.study.security.AuthenticationService;
 import com.study.security.entity.UserRole;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,6 @@ public class AdminSecurityFilter implements Filter {
     public AdminSecurityFilter() {
     }
 
-    public AdminSecurityFilter(AuthenticationService authService) {
-        this.authService = authService;
-    }
 
     public void setAuthService(AuthenticationService authService) {
         this.authService = authService;
@@ -38,7 +36,9 @@ public class AdminSecurityFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        AuthenticationService authService = (AuthenticationService) WebApplicationContextUtils.getRequiredWebApplicationContext(filterConfig.getServletContext())
+                .getBean("authenticationService");
+        this.authService = authService;
     }
 
     @Override
