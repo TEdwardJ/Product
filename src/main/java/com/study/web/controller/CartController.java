@@ -8,16 +8,11 @@ import com.study.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class CartController {
@@ -30,10 +25,10 @@ public class CartController {
 
 
     @RequestMapping(path="/cart/add/{id}",method = RequestMethod.POST)
-    public String addProduct(HttpServletRequest request, @PathVariable int id){
+    public String addProduct(@CookieValue("user-token") String cookie, @PathVariable int id){
         Product product = productService.getOne(id);
         if (product!=null){
-            Session session =  authService.getSession(authService.getUserToken(request.getCookies()));
+            Session session =  authService.getSession(cookie);
             Cart cart =session.getCart();
             cart.addProduct(product);
         }
@@ -41,8 +36,8 @@ public class CartController {
     }
 
     @RequestMapping(path="/cart/",method = RequestMethod.GET)
-    public String showCartList(HttpServletRequest request, Model model){
-        Session session =  authService.getSession(authService.getUserToken(request.getCookies()));
+    public String showCartList(@CookieValue("user-token") String cookie, Model model){
+        Session session =  authService.getSession(cookie);
         Cart cart =session.getCart();
 
         model.addAttribute("cart", cart);

@@ -26,13 +26,13 @@ public class ProductShopController {
     ProductService productService;
 
     @RequestMapping(path = {"/product/delete/{id}"}, method = RequestMethod.POST)
-    public String deleteProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable int id) {
+    public String deleteProduct(@PathVariable int id) {
         productService.delete(id);
         return "redirect:/";
     }
 
     @RequestMapping(path = {"/product/add"}, method = RequestMethod.POST)
-    public String addProduct(HttpServletRequest request, HttpServletResponse response) {
+    public String addProduct(HttpServletRequest request) {
         productService.add(new Product(
                 request.getParameter("picturePath"),
                 request.getParameter("name"),
@@ -42,13 +42,11 @@ public class ProductShopController {
     }
 
     @RequestMapping(path = {"/login"}, method = RequestMethod.POST)
-    public String loginPost(HttpServletRequest request, HttpServletResponse response) {
-        String user = request.getParameter("login");
-        String password = request.getParameter("password");
-        Session currentSession = authService.auth(user, password);
+    public String loginPost(@RequestParam String login, @RequestParam String password, HttpServletRequest request, HttpServletResponse response) {
+        Session currentSession = authService.auth(login, password);
         if (currentSession != null) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("user_login", user);
+            session.setAttribute("user_login", login);
 
             Cookie cookie = new Cookie("user-token", currentSession.getToken());
             cookie.setMaxAge(AuthenticationService.MAX_AGE);
@@ -70,9 +68,7 @@ public class ProductShopController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String productList(HttpServletResponse resp, Model model) {
-        resp.addHeader("Content-Type", "text/html;charset=utf-8");
-        resp.setCharacterEncoding("utf-8");
+    public String productList(Model model) {
         List<Product> list = productService.getAll();
         model.addAttribute("products", productService.getAll());
         return "index.html";
@@ -80,8 +76,7 @@ public class ProductShopController {
     }
 
     @RequestMapping(path = "/product/info", method = RequestMethod.GET)
-    public String productInfo(HttpServletRequest req, Model model) {
-        int id = Integer.valueOf(req.getParameter("id"));
+    public String productInfo(@RequestParam Integer id, Model model) {
         Product product = productService.getOne(id);
         model.addAttribute("product", product);
 
@@ -90,7 +85,7 @@ public class ProductShopController {
 
 
     @RequestMapping(path = "/product/add/*", method = RequestMethod.GET)
-    public String addProductForm(HttpServletRequest req, HttpServletResponse resp, Model model) {
+    public String addProductForm(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
         return "addProduct.html";
@@ -98,8 +93,7 @@ public class ProductShopController {
 
 
     @RequestMapping(path = "/product/edit", method = RequestMethod.GET)
-    public String editProductForm(HttpServletRequest req, Model model) {
-        int id = Integer.valueOf(req.getParameter("id"));
+    public String editProductForm(@RequestParam Integer id, Model model) {
         Product product = productService.getOne(id);
         model.addAttribute("product", product);
         return "addProduct.html";
