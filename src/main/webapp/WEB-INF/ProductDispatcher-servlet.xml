@@ -3,9 +3,10 @@
        xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/images/**" location="/webresources/images/"/>
     <context:component-scan base-package = "com.study.web.controller" />
-    <!--<mvc:annotation-driven />-->
+    <!--<mvc:default-servlet-handler/>-->
 
     <bean id="userSecurityFilter" class="com.study.web.filter.UserSecurityFilter">
     </bean>
@@ -41,6 +42,4 @@
         <!-- compatibility.                                                          -->
         <property name="enableSpringELCompiler" value="true" />
     </bean>
-
-
 </beans>

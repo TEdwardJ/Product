@@ -59,7 +59,7 @@ public class ProductShopController {
     }
 
     @RequestMapping(path = {"/login"}, method = RequestMethod.GET)
-    public String login(@CookieValue("user-token") Cookie cookie, @RequestParam(required = false) String logout) {
+    public String login(@CookieValue(value = "user-token", required = false) Cookie cookie, @RequestParam(required = false) String logout) {
         if (logout != null) {
             authService.logout(cookie);
         }
