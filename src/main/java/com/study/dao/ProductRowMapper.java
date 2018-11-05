@@ -25,11 +25,8 @@ public class ProductRowMapper {
 
     public Product getRow(ResultSet resultSet) throws SQLException {
         Product product;
-        if (resultSet.next()){
             product = mapProduct(resultSet);
             return product;
-        }
-        return null;
     }
 
     private Product mapProduct(ResultSet resultSet) throws SQLException {

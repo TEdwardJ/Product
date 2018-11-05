@@ -14,19 +14,23 @@
     </bean>
     <bean id="dataSourcePostProcessor" class="com.study.DbBeanPostProcessor">
     </bean>
-    <!--<bean id="productDao" class="com.study.dao.JdbcProductDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    <bean id="userDao" class="com.study.dao.JdbcUserDao">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    <bean id="productService" class="com.study.service.DefaultProductService">
-        <property name="productDao" ref="productDao"/>
-    </bean>
-    <bean id="userService" class="com.study.service.DefaultUserService">
-        <property name="userDao" ref="userDao"/>
-    </bean>-->
+
     <bean id="authenticationService" class="com.study.security.DefaultAuthenticationService">
         <!--<property name="userService" ref="userService"/>-->
+    </bean>
+    <bean id = "productSelectQuery" class="java.lang.String">
+        <constructor-arg value="SELECT * FROM shop.products"/>
+    </bean>
+    <bean id = "productSelectByIdQuery" class="java.lang.String">
+        <constructor-arg value="SELECT  * FROM shop.products t WHERE t.id = ?"/>
+    </bean>
+    <bean id = "productUpdateQuery" class="java.lang.String">
+        <constructor-arg value="UPDATE shop.products set name = ?, picturePath = ?, price = ?, addeddate = ? WHERE id = ?"/>
+    </bean>
+    <bean id = "productInsertQuery" class="java.lang.String">
+        <constructor-arg value="INSERT INTO shop.products(name,picturepath,price,addeddate) VALUES(?,?,?,?)"/>
+    </bean>
+    <bean id = "productDeleteQuery" class="java.lang.String">
+        <constructor-arg value="DELETE FROM shop.products WHERE id = ?"/>
     </bean>
 </beans>

@@ -2,26 +2,34 @@ package com.study.dao;
 
 import com.study.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class JdbcProductDao implements ProductDao {
 
-    private static final String ALL_PRODUCTS_QUERY = "SELECT * FROM shop.products";
-    private static final String PRODUCT_DEL_QUERY = "DELETE FROM shop.products WHERE id = ? ";
-    private static final String GET_ONE_QUERY = "SELECT  * FROM shop.products t WHERE t.id = ? ;";
-    private static final String PRODUCT_UPD_QUERY = "UPDATE shop.products set name = ?, picturePath = ?, price = ?, addeddate = ? WHERE id = ? ";
-    private static final String PRODUCT_INS_QUERY = "INSERT INTO shop.products(picturepath,name,price,addeddate) VALUES(?,?,?,?) ";
+    @Autowired
+    private String productSelectQuery;
+    @Autowired
+    private String productDeleteQuery;
+    @Autowired
+    private String productSelectByIdQuery;
+    @Autowired
+    private String productUpdateQuery;
+    @Autowired
+    private String productInsertQuery;
 
     private ProductRowMapper rowMapper = new ProductRowMapper();
 
     @Autowired
     private DataSource dataSource;
+
+    JdbcTemplate jdbcTemplate;
 
 
     public JdbcProductDao(DataSource dataSource) {
@@ -37,76 +45,55 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public void delete(int id) {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(PRODUCT_DEL_QUERY);) {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(productDeleteQuery);) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void insert(Product product) {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(PRODUCT_INS_QUERY);) {
-                stmt.setString(1, product.getPicturePath());
-                stmt.setString(2, product.getName());
-                stmt.setDouble(3, product.getPrice());
-                stmt.setTimestamp(4, Timestamp.valueOf(product.getAddDate()));
+        jdbcTemplate.update(productInsertQuery,
+                new Object[]{product.getName(),product.getPicturePath(),product.getPrice(),Timestamp.valueOf(product.getAddDate())});
 
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
     }
 
     @Override
     public void update(Product product) {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(PRODUCT_UPD_QUERY);) {
-                stmt.setString(1, product.getName());
-                stmt.setString(2, product.getPicturePath());
-                stmt.setDouble(3, product.getPrice());
-                stmt.setTimestamp(4, Timestamp.valueOf(product.getAddDate()));
-                stmt.setInt(5, product.getId());
-
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+        jdbcTemplate.update(productUpdateQuery,
+                new Object[]{product.getName(),product.getPicturePath(),product.getPrice(),Timestamp.valueOf(product.getAddDate()),product.getId()});
     }
 
     @Override
     public List<Product> getAll() {
-        List<Product> list = new ArrayList<>();
-            try (Connection connection = dataSource.getConnection();
-                 Statement stmt = connection.createStatement();
-                 ResultSet rs = stmt.executeQuery(ALL_PRODUCTS_QUERY)) {
-                list = rowMapper.getRows(rs);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+        final List<Product> list =
+
+                jdbcTemplate.query(
+                        productSelectQuery,
+                        (rs, rowNum) -> rowMapper.getRow(rs)
+                );
+
         return list;
     }
 
     @Override
     public Product getById(int id) {
-        Product product;
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement stmt = connection.prepareStatement(GET_ONE_QUERY);       ) {
-                stmt.setInt(1,id);
-                stmt.execute();
-                ResultSet resultSet = stmt.getResultSet();
-                product = rowMapper.getRow(resultSet);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
+        Product product =
+
+        jdbcTemplate.query(
+                productSelectByIdQuery,
+                new Integer[] {new Integer(id)},
+                rs -> (rs.next())?rowMapper.getRow(rs):null
+        );
         return product;
+    }
+
+    @PostConstruct
+    public void init() {
+        jdbcTemplate = new JdbcTemplate(dataSource);
     }
 }

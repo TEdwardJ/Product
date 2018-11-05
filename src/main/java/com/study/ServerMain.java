@@ -9,8 +9,6 @@ import com.study.web.filter.AdminSecurityFilter;
 import com.study.web.filter.GuestSecurityFilter;
 import com.study.web.filter.UserSecurityFilter;
 import com.study.web.servlet.*;
-import edu.eteslenko.ioc.ApplicationContext;
-import edu.eteslenko.ioc.ClassPathApplicationContext;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
