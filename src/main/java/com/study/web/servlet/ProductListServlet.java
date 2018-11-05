@@ -24,6 +24,8 @@ public class ProductListServlet extends AbstractProductServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            resp.setContentType("text/html;charset=utf-8");
+            resp.setStatus(HttpServletResponse.SC_OK);
 
             PageGenerator pageGenerator = PageGenerator.getInstance();
             Map<String, Object> attributes = new HashMap();
@@ -31,8 +33,6 @@ public class ProductListServlet extends AbstractProductServlet {
 
             attributes.put("products", list);
             resp.getWriter().println(pageGenerator.getPage("index.html", attributes));
-            resp.setContentType("text/html;charset=utf-8");
-            resp.setStatus(HttpServletResponse.SC_OK);
 
     }
 }

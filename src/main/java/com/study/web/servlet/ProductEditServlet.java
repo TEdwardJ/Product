@@ -45,7 +45,7 @@ public class ProductEditServlet extends AbstractProductServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int id = getIdFromUrl(req.getRequestURL().toString());
         getProductService().update(new Product(Integer.valueOf(req.getParameter("id")),
                 req.getParameter("picturePath"),
